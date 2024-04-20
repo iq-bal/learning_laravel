@@ -2,39 +2,19 @@
 
 @section('content')
 
-<h1> Listings </h1>
+@include('partials._hero')
+@include('partials._search')
 
-<h1> <?php echo $heading; ?> </h1>
+<div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
 
-<?php foreach($listings as $listing): ?>
-    <h2>
-       <?php echo $listing['title'];?> 
-    </h2>
-    <p>
-       <?php echo $listing['description'];?> 
-    </p>
-<?php endforeach; ?>
+@unless (count($listings)==0)
 
-<!-- we can clear this mess by using blade -->
-{{-- we can use directives  --}}
-
-<h1>Listings after using blade</h1>
-
-<h1> {{$heading}} </h1>
-
-@foreach($listings as $listing)
-    <h2>
-      <a href="/listings/{{$listing['id']}}"> {{$listing['title']}} </a>
-    </h2>
-    <p>
-       {{$listing['description']}}
-    </p>
+@foreach ($listings as $listing)
+   <x-listing-card :listing="$listing" />
+   {{-- we are passing a variable $listing as prop to a components named listing-card --}}
 @endforeach
-
-@php
-   $test = 1;    
-@endphp
-
-{{$test}}
-
+@else
+<p>No listings found</p>
+@endunless
+</div>
 @endsection
